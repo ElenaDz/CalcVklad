@@ -134,8 +134,8 @@
         $inputs_calc.each((index, value) => {
             let $input = $(value);
             let $input_name = $input.attr("name");
-            input_value = +$input.val().replace(' ', '')
-            if (typeof input_value != 'number') {
+            input_value = +$input.val().replace(' ', '');
+            if (typeof input_value !== 'number') {
                 input_value = 0;
             }
             inputs[$input_name] = input_value;
@@ -151,15 +151,15 @@
 
         function getIncome(pct_month, term, sum) {
             return +(pct_month * term * sum / 100).toFixed(2);
-        };
+        }
 
         function getResult(income, sum) {
             return +(income + sum).toFixed(2);
-        };
+        }
 
         function getPctSum(sum, result) {
             return +(sum * 100 / result);
-        };
+        }
 
         $box.find('.meter').css('width', getPctSum(sum, getResult(getIncome(pct_month, term, sum), sum)) + '%');
         $box.find('.income_js').text(getIncome(pct_month, term, sum).toLocaleString() + ' ₽');
@@ -169,8 +169,8 @@
         $inputs_calc.on('input', (event) => {
             let $input = $(event.currentTarget);
             let $input_name = $input.attr("name");
-            input_value = +$input.val().replace(' ', '')
-            if (typeof input_value != 'number' || isNaN(input_value)) {
+            input_value = +$input.val().replace(' ', '');
+            if (typeof input_value !== 'number' || isNaN(input_value)) {
                 input_value = 0;
             }
             inputs[$input_name] = input_value;
