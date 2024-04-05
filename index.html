@@ -125,21 +125,22 @@
 <script>
     let $boxs = $('.box');
     $boxs.each((index, element) => {
-
-
         let $box = $(element);
         let inputs = [];
         let $inputs_calc = $box.find('input');
         let input_value = 0;
+
         $inputs_calc.each((index, value) => {
             let $input = $(value);
             let $input_name = $input.attr("name");
+
             input_value = +$input.val().replace(' ', '');
             if (typeof input_value !== 'number') {
                 input_value = 0;
             }
             inputs[$input_name] = input_value;
         });
+
         let keY_bid = 'bid';
         let key_term = 'term';
         let key_sum = 'sum';
@@ -165,10 +166,10 @@
         $box.find('.income_js').text(getIncome(pct_month, term, sum).toLocaleString() + ' ₽');
         $box.find('.results_js').text(getResult(getIncome(pct_month, term, sum), sum).toLocaleString() + ' ₽');
 
-
         $inputs_calc.on('input', (event) => {
             let $input = $(event.currentTarget);
             let $input_name = $input.attr("name");
+
             input_value = +$input.val().replace(' ', '');
             if (typeof input_value !== 'number' || isNaN(input_value)) {
                 input_value = 0;
@@ -183,10 +184,8 @@
             $box.find('.income_js').text(getIncome(pct_month, term, sum).toLocaleString() + ' ₽');
             $box.find('.results_js').text(getResult(getIncome(pct_month, term, sum), sum).toLocaleString() + ' ₽');
             $box.find('.vklad').text(sum.toLocaleString() + ' ₽');
-
         });
     });
-
 </script>
 </body>
 </html>
