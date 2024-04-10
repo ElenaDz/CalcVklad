@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- (исправила)-->
      <title>Калькулятор Вклада</title>
      <link rel="stylesheet" href="css/main.css">
      <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no">
@@ -21,8 +20,6 @@
              <div class="item">
                  <label>
                      <span>Сумма вклада</span>
-                     <!-- FixMe type=number (исправила)-->
-                    <!-- отступ от тысяч здесь не нужно так как это сделать не просто сейчас нам это не нужно -->
                     <input type="number" name="sum" value="500000">
                 </label>
 
@@ -30,14 +27,12 @@
             <div class="item">
                 <label>
                     <span>Срок вклада</span>
-                    <!-- FixMe type=number (исправила)-->
                     <input type="number" name="term" value="60">
                 </label>
             </div>
             <div class="item">
                 <label>
                     <span>Процентная ставка, % годовых</span>
-                    <!-- FixMe type=number (исправила)-->
                     <input type="number" name="bid" value="15">
                 </label>
             </div>
@@ -57,8 +52,6 @@
                         <div class="dot greene"></div>
                         <span>Доход</span>
                     </div>
-                    <!-- TODO используй тег output для всех результатов расчетов  (исправила)-->
-                    <!-- FixMe не вижу этой цифры после загрузки страницы, убери и отсюда (исправила)-->
                     <output name="income" class="rubl income"></output>
                 </div>
                 <div class="item">
@@ -79,18 +72,15 @@
 
 
 <script>
-    // FIXME boxes(исправила)
     let $boxes = $('.box');
 
     $boxes.each((index, element) => {
         let $box = $(element);
         let inputs = [];
-        // FIXME просто $inputs (не смогла исправить, всё ломается)
-
-        let $inputs_calc = $box.find('input');
+        let $inputs = $box.find('input');
         let input_value = 0;
 
-        $inputs_calc.each((index, value) => {
+        $inputs.each((index, value) => {
             let $input = $(value);
             let $input_name = $input.attr("name");
 
@@ -101,25 +91,19 @@
             inputs[$input_name] = input_value;
         });
 
-        // FixMe молодец, что завела для магических строк переменные, но здесь нужны не они, а переменные вместо inputs[keY_bid] нужна переменная bid(исправила)
-        // FIXME избавься от inputs в пользу переменных, если тебя требуется обработка от входных данных из Input полей заведи фукнцию которая будет "чистить" данные от input
         let input_bid = inputs['bid'];
         let input_term = inputs['term'];
         let input_sum = inputs['sum'];
-
 
         let pct_month = input_bid / 12;
         // доход = проц за месяц* колво месяцев * сёмму вклада  / 100
         let term = +parseFloat(input_term).toFixed(2);
         let sum = +parseFloat(input_sum).toFixed(2);
 
-        // FIXME подумай что будет если мы захотим посчитать прибыл без округления, нам что переписывать эту функцию, это не праивльно фукнция должана просто считать прибыль,(исправила)
-        // а округление ты сделаешь позже в том месте где это действительно нужно а именно на выводе
         function getIncome(pct_month, term, sum) {
             return +(pct_month * term * sum / 100);
         }
 
-        // FIXME смотри выше(исправила)
         function getResult(income, sum) {
             return +(income + sum);
         }
@@ -128,7 +112,6 @@
             return +(sum * 100 / result);
         }
 
-        // Сложно читать такую сложную строку когда она в одну строчку, так лучше
         $box
             .find('.meter')
             .css(
@@ -136,27 +119,22 @@
                 getPctSum(sum, getResult(getIncome(pct_month, term, sum), sum)) + '%'
             );
 
-        // FIXME смотри выше, исправь здесь и везде далее (исправила)
         $box
             .find('.income')
             .text(
                 getIncome(pct_month, term, sum).toFixed(2) + ' ₽'
             );
-        // FIXME .toLocaleString() не нужно избавься везде (исправила)
         $box
             .find('.results')
             .text(
                 getResult(getIncome(pct_month, term, sum), sum).toFixed(2) + ' ₽'
             );
 
-        $inputs_calc.on('input', (event) => {
+        $inputs.on('input', (event) => {
             let $input = $(event.currentTarget);
             let $input_name = $input.attr("name");
 
-            // FIXME загадчный синтаксис не всем знаком используй более явный что к чему прибавлеяешь например a = a + 1 или a = 1 + a так на много понятнее всем
-            // Здесь "+" я строку привожу к числу, здесь нет подсчёта
-            input_value = +$input.val().replace(' ', '');
-            // FIXME кажеться я видел такое же где то выше, избавиться от этого (исправила)
+            input_value = parseInt($input.val().replace(' ', ''));
 
             inputs[$input_name] = input_value;
             let input_bid = inputs['bid'];
@@ -164,7 +142,7 @@
             let input_sum = inputs['sum'];
             pct_month = input_bid / 12;
             // доход = проц за месяц* колво месяцев * сёмму вклада  / 100
-            // FIXME смотри выше (исправила)
+
             term = +parseFloat(input_term);
             sum = +parseFloat(input_sum);
             $box
